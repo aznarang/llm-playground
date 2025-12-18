@@ -1,6 +1,7 @@
 import requests
 import os
 import time
+import json 
 
 HF_URL = "https://router.huggingface.co/v1/chat/completions"
 HF_MODEL = "google/gemma-2-2b-it"
