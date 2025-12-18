@@ -3,7 +3,7 @@ import json
 
 from auth import login
 from context_builder import build_mcp
-from llm import call_llm_planner
+from llm import call_llm_planner, parse_json_safely
 from tools import calculator, text_length
 
 st.set_page_config(page_title="Tool Calling", layout="wide")
@@ -21,11 +21,11 @@ user_prompt = st.text_input("User Query")
 if st.button("Run"):
     mcp = build_mcp(user_prompt, st.session_state)
 
-    planner_output = call_llm_planner(
+    planner_output_raw = call_llm_planner(
         system_prompt="You are a careful enterprise planner.",
         mcp_context=mcp
     )
-
+    planner_output = parse_json_safely(planner_output_raw)
     col1, col2, col3 = st.columns(3)
 
     with col1:
